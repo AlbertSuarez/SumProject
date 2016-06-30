@@ -5,7 +5,7 @@ import pereberge.sumproject.utils.Entity;
 /**
  * Created by pere on 6/28/16.
  */
-public class Reserva implements Entity {
+public class Reservation implements Entity {
     private int id;
     private boolean ocupat = false;
     private String personaReserva;
@@ -13,7 +13,7 @@ public class Reserva implements Entity {
 
     int c = 0;
 
-    public Reserva(String personaReserva, String hora){
+    public Reservation(String personaReserva, String hora){
         this.id = c;
         this.hora = hora;
         this.personaReserva = personaReserva;

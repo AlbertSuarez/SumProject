@@ -9,23 +9,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.mainAcitivity"
+            android:name=".activity.MainActivity"
             android:label="@string/title_activity_main_acitivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
-            android:name=".activity.timetableActivity"
+            android:name=".activity.TimetableActivity"
             android:label="@string/title_activity_tkm"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.ReservaActivity"
+            android:name=".activity.ReservationActivity"
             android:label="@string/title_activity_reserva"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

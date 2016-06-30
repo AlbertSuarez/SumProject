@@ -3,18 +3,15 @@ package pereberge.sumproject.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by pere on 6/28/16.
- */
-public class Horari {
+public class Timetable {
 
-    private String dia;
-    private List<Reserva> hores = new ArrayList<>();
+    private String day;
+    private List<Reservation> hores = new ArrayList<>();
 
-    public Horari(String dia, String[] hores){
-        this.dia = dia;
-        for(String h:hores){
-            this.hores.add(new Reserva(null, h));
+    public Timetable(String day, String[] hores){
+        this.day = day;
+        for (String h : hores) {
+            this.hores.add(new Reservation(null, h));
         }
     }
 

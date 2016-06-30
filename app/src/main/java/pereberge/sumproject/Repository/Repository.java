@@ -44,8 +44,6 @@ public abstract class Repository<T extends Entity> implements ChildEventListener
 
     public abstract List<T> all();
 
-
-
     protected void notifyChange(OnChangedListener.EventType type) {
         if (listener!=null){
             listener.onChanged(type);
@@ -75,7 +73,6 @@ public abstract class Repository<T extends Entity> implements ChildEventListener
         updateInternal(convert(dataSnapshot));
         notifyChange(OnChangedListener.EventType.Moved);
     }
-
 
     protected abstract T convert(DataSnapshot data);
 
