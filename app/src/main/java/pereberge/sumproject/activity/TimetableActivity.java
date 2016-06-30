@@ -21,11 +21,12 @@ import pereberge.sumproject.adapter.TimetableAdapter;
 import pereberge.sumproject.domain.Reservation;
 import pereberge.sumproject.domain.Timetable;
 import pereberge.sumproject.services.ReservationService;
+import pereberge.sumproject.utils.ServiceFactory;
 
 public class TimetableActivity extends ListActivity {
 
     private String nom;
-    private Context context = getApplicationContext();
+    private ReservationService reservationService;
 
     Calendar today = Calendar.getInstance();
     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
@@ -42,26 +43,20 @@ public class TimetableActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ReservationRepository reserves = new ReservationRepository(context);
-        ReservationService reservationService = new ReservationService(reserves);
-
+        reservationService = ServiceFactory.getReservationService(getApplicationContext());
         setContentView(R.layout.activity_timetable);
-
-        r = reservationService.getReserves(data);
-        setListAdapter(new TimetableAdapter(this, HORES, r));
-        this.context = getApplicationContext();
 
         initialize();
     }
 
     private void initialize() {
-
+        r = reservationService.getReserves(data);
+        setListAdapter(new TimetableAdapter(this, HORES, r));
     }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        String hora = l.getSelectedItem().toString();
+        String hora = l.getItemAtPosition(position).toString();
         for (Reservation a: r) {
             if(a.getHora().equals(hora)){
                 Toast.makeText(this, "Pista Ocupada", Toast.LENGTH_SHORT).show();

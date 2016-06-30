@@ -32,7 +32,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/newName"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:text="Nom " />
