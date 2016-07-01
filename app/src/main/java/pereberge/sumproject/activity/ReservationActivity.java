@@ -17,27 +17,31 @@ import pereberge.sumproject.utils.ServiceFactory;
 public class ReservationActivity extends AppCompatActivity {
 
     private EditText editTextName;
-    private TextView hour;
-    private String dayExtra;
-    private String hourExtra;
     private String name;
+    private ReservationService reservationService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        assert toolbar != null;
+        toolbar.setTitle("Reserva");
         setSupportActionBar(toolbar);
 
         TextView day = (TextView) findViewById(R.id.day);
-        hour = (TextView) findViewById(R.id.hora);
+        TextView hour = (TextView) findViewById(R.id.hora);
         editTextName = (EditText) findViewById(R.id.newName);
         Button book = (Button) findViewById(R.id.botoReserva);
 
-        final ReservationService reservationService = ServiceFactory.getReservationService(getApplicationContext());
+        reservationService = ServiceFactory.getReservationService(getApplicationContext());
 
-        dayExtra = getIntent().getStringExtra("dia");
-        hourExtra = getIntent().getStringExtra("hora");
+        String dayExtra = getIntent().getStringExtra("dia");
+        String hourExtra = getIntent().getStringExtra("hora");
+        assert day != null;
+        day.setText(dayExtra);
+        assert hour != null;
+        hour.setText(hourExtra);
 
         assert book != null;
         book.setOnClickListener(new View.OnClickListener() {
@@ -52,9 +56,5 @@ public class ReservationActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
     }
-
 }

@@ -33,4 +33,5 @@ dependencies {
     compile 'com.google.firebase:firebase-crash:9.0.0'
     compile 'com.firebase:firebase-client-android:2.3.1'
 
+    compile 'com.google.android.gms:play-services-appindexing:9.0.0'
 }

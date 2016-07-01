@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import pereberge.sumproject.R;
@@ -32,13 +34,20 @@ public class TimetableAdapter extends ArrayAdapter<String> {
         View rowView = inflater.inflate(R.layout.horari_item_list, parent, false);
         TextView textView = (TextView) rowView.findViewById(R.id.hora);
         textView.setText(values[position]);
+        TextView state = (TextView) rowView.findViewById(R.id.estat);
 
-        for(Reservation f:r){
+        /*for(Reservation f:r){
+            TextView nom = (TextView) rowView.findViewById(R.id.nomReserva);
             if(values[position].equals(f.getHora())){
-                TextView nom = (TextView) rowView.findViewById(R.id.nomReserva);
                 nom.setText(f.getPersonaReserva());
             }
-        }
+            else{
+                nom.setText("Lliure");
+                nom.setTextColor(Integer.parseInt("4fa342", 16));
+            }
+        }*/
+
+
         // Change icon based on name
         String s = values[position];
 
