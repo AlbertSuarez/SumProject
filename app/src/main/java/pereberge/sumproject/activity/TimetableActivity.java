@@ -2,9 +2,11 @@ package pereberge.sumproject.activity;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Switch;
@@ -38,7 +40,7 @@ public class TimetableActivity extends ListActivity {
     Date today = calendar.getTime();
     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
     String todayDate = df.format(today.getTime());
-    //FALTA UN DIA
+    //FALTA SUMAR UN DIA
     Date tomorrow = calendar.getTime();
     String tomorrowDate = df.format(today);
 
@@ -51,18 +53,38 @@ public class TimetableActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        reservationService = ServiceFactory.getReservationService(getApplicationContext());
+        //reservationService = ServiceFactory.getReservationService(getApplicationContext());
         setContentView(R.layout.activity_timetable);
-
-        swit = (Switch) findViewById(R.id.interruptor);
-        swit.setTextOff("Avui");
-        swit.setTextOn("Demà");
-
         initialize();
     }
 
     private void initialize() {
-        r = reservationService.getReserves(todayDate);
+        Button tomorrow = (Button) findViewById(R.id.dema);
+        tomorrow.setBackgroundColor(getResources().getColor(R.color.blueLight));
+        tomorrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button today = (Button) findViewById(R.id.avui);
+                Button tomorrow = (Button) findViewById(R.id.dema);
+                today.setBackgroundColor(getResources().getColor(R.color.blueLight));
+                tomorrow.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                tomorrow.setTypeface(tomorrow.getTypeface(), Typeface.BOLD);
+                today.setTypeface(today.getTypeface(),Typeface.NORMAL);
+            }
+        });
+        Button today = (Button) findViewById(R.id.avui);
+        today.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button tomorrow = (Button) findViewById(R.id.dema);
+                Button today = (Button) v.findViewById(R.id.avui);
+                tomorrow.setBackgroundColor(getResources().getColor(R.color.blueLight));
+                today.setTypeface(tomorrow.getTypeface(), Typeface.BOLD);
+                today.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                tomorrow.setTypeface(today.getTypeface(),Typeface.NORMAL);
+            }
+        });
+        //r = reservationService.getReserves(todayDate);
         setListAdapter(new TimetableAdapter(this, HORES, r));
     }
 
@@ -78,20 +100,7 @@ public class TimetableActivity extends ListActivity {
         //Obtenir nom reserva
         Intent intent = new Intent(TimetableActivity.this, ReservationActivity.class);
         intent.putExtra("hora", hora);
-        if(swit.isChecked())    intent.putExtra("dia", today);
-        else    intent.putExtra("dia", tomorrow);
+        intent.putExtra("dia", today);
         startActivity(intent);
     }
-
-
-    //no fa res
-    private void modifica(View v, int position) {
-        //timetable.reservaPista(position, nom, todayDate);
-        TextView t = (TextView) v.findViewById(R.id.nomReserva);
-        t.setText(nom);
-        LinearLayout item = (LinearLayout) v.findViewById(R.id.item);
-        item.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-        item.refreshDrawableState();
-    }
-
 }
