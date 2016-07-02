@@ -4,6 +4,8 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;

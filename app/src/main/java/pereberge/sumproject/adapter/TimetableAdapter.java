@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.List;
 
 import pereberge.sumproject.R;
@@ -41,9 +42,14 @@ public class TimetableAdapter extends ArrayAdapter<String> {
             TextView nom = (TextView) rowView.findViewById(R.id.nameReservation);
             if (DateUtils.isSameHour(reservation.getDate(), hour, minute)) {
                 nom.setText(reservation.getPerson());
+                rowView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
             }
         }
-
         return rowView;
     }
 
