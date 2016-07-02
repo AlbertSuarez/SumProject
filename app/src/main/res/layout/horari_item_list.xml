@@ -8,30 +8,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Space
             android:layout_width="15dp"
             android:layout_height="wrap_content" />
+
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/hora"
+            android:layout_height="100dp"
+            android:id="@+id/hour"
             android:textStyle="bold"
-            android:textSize="40px"
+            android:text="@string/hour_test"
+            android:textSize="20sp"
             android:gravity="center"/>
+
         <Space
             android:layout_width="40dp"
             android:layout_height="wrap_content" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:gravity="center"
             android:textStyle="bold"
-            android:textSize="40px"
-            android:id="@+id/nomReserva"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/estat"/>
+            android:textSize="18sp"
+            android:id="@+id/nameReservation"/>
+
     </LinearLayout>
 
 </LinearLayout>

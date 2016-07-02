@@ -1,4 +1,4 @@
-package pereberge.sumproject.Repository;
+package pereberge.sumproject.repository;
 import android.content.Context;
 import android.util.Log;
 
@@ -132,7 +132,6 @@ public abstract class FirebaseRepository<T extends Entity> extends Repository<T>
     public List<T> all() {
         return new ArrayList<>(map.values());
     }
-
 
     /**
      * Listener that controls when it is occurred an error

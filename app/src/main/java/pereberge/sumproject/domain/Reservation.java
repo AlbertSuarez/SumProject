@@ -1,57 +1,47 @@
 package pereberge.sumproject.domain;
 
+import java.util.Date;
+
 import pereberge.sumproject.utils.Entity;
 
-/**
- * Created by pere on 6/28/16.
- */
 public class Reservation implements Entity {
-    private int id;
-    private boolean ocupat = false;
-    private String personaReserva;
-    private String hora;
 
-    int c = 0;
+    private String id;
+    private String person;
+    private Date date;
 
-    public Reservation(String personaReserva, String hora){
-        this.id = c;
-        this.hora = hora;
-        this.personaReserva = personaReserva;
-        this.ocupat = true;
-        c++;
+    public Reservation() {
+
     }
 
-    public boolean isOcupat() {
-        return ocupat;
+    public Reservation(String person, Date date){
+        this.date = date;
+        this.person = person;
     }
 
-    public void setOcupat(boolean ocupat) {
-        this.ocupat = ocupat;
+    public String getPerson() {
+        return person;
     }
 
-    public String getPersonaReserva() {
-        return personaReserva;
+    public void setPerson(String person) {
+        this.person = person;
     }
 
-    public void setPersonaReserva(String personaReserva) {
-        this.personaReserva = personaReserva;
+    public Date getDate() {
+        return date;
     }
 
-    public String getHora() {
-        return hora;
-    }
-
-    public void setHora(String hora) {
-        this.hora = hora;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override
     public String getId() {
-        return null;
+        return id;
     }
 
     @Override
     public void setId(String id) {
-
+        this.id = id;
     }
 }

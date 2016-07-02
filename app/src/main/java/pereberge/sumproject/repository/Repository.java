@@ -1,9 +1,8 @@
-package pereberge.sumproject.Repository;
+package pereberge.sumproject.repository;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pereberge.sumproject.utils.Entity;

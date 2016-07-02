@@ -2,11 +2,11 @@ package pereberge.sumproject.utils;
 
 import java.util.List;
 
-import pereberge.sumproject.Repository.Repository;
+import pereberge.sumproject.repository.Repository;
 
 public abstract class Service<T extends Entity> {
 
-    protected final Repository<T> repository;
+    protected Repository<T> repository;
 
     public Service (Repository<T> repository){
         this.repository = repository;

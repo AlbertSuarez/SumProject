@@ -35,7 +35,7 @@
         android:id="@+id/newName"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:text="Nom " />
+        android:hint="@string/hint_name"/>
 
     <Button
         android:layout_width="wrap_content"

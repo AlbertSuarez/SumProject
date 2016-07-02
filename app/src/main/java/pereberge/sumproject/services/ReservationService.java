@@ -1,42 +1,72 @@
 package pereberge.sumproject.services;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-/**
- * Created by pere on 6/29/16.
- */
-import pereberge.sumproject.Repository.Repository;
+import pereberge.sumproject.repository.Repository;
 import pereberge.sumproject.domain.Reservation;
+import pereberge.sumproject.utils.DateUtils;
 import pereberge.sumproject.utils.Service;
 
 public class ReservationService extends Service<Reservation> {
 
-    private static final String TAG = ReservationService.class.getSimpleName();
-    private final Repository<Reservation> reservationRepository;
     private int loaded = 0;
     private int loadNeed = 1;
 
     public ReservationService(Repository<Reservation> repository) {
         super(repository);
-        this.reservationRepository = repository;
+        this.repository = repository;
     }
 
-    @Override
-    public Reservation save(Reservation item) {
-        Reservation reservation = super.save(item);
-        return reservation;
+    public List<Reservation> getReservations() {
+        return repository.all();
     }
 
-
-    public List<Reservation> getReserves(String dia) {
-        List<Reservation> list;
-        list = reservationRepository.all();
+    public List<Reservation> getReservationsByDay(Integer day, Integer month, Integer year) {
+        List<Reservation> list = new ArrayList<>();
+        Date date = DateUtils.createDate(day, month, year);
+        for (Reservation reservation : repository.all()) {
+            if (DateUtils.isSameDay(reservation.getDate(), date))
+                list.add(reservation);
+        }
         return list;
     }
 
+    public List<Reservation> getReservationsByTodayAndTomorrow() {
+        List<Reservation> list = new ArrayList<>();
+        Date today = DateUtils.getToday();
+        Date tomorrow = DateUtils.getTomorrow();
+        for (Reservation reservation : repository.all()) {
+            if (DateUtils.isSameDay(reservation.getDate(), today) ||
+                    DateUtils.isSameDay(reservation.getDate(), tomorrow))
+                list.add(reservation);
+        }
+        return list;
+    }
 
-    public Reservation getReserva(String dia) {
-        return reservationRepository.get(dia);
+    public List<Reservation> getReservationsByToday() {
+        List<Reservation> list = new ArrayList<>();
+        Date today = DateUtils.getToday();
+        for (Reservation reservation : repository.all()) {
+            if (DateUtils.isSameDay(reservation.getDate(), today))
+                list.add(reservation);
+        }
+        return list;
+    }
+
+    public List<Reservation> getReservationsByTomorrow() {
+        List<Reservation> list = new ArrayList<>();
+        Date tomorrow = DateUtils.getTomorrow();
+        for (Reservation reservation : repository.all()) {
+            if (DateUtils.isSameDay(reservation.getDate(), tomorrow))
+                list.add(reservation);
+        }
+        return list;
+    }
+
+    public Reservation getReservation(String id) {
+        return repository.get(id);
     }
 
     @Override
@@ -48,9 +78,9 @@ public class ReservationService extends Service<Reservation> {
                 triggerListener(listener, type);
             }
         });
-        if (reservationRepository != null) {
+        if (repository != null) {
             loadNeed+=1;
-            reservationRepository.setOnChangedListener(new Repository.OnChangedListener() {
+            repository.setOnChangedListener(new Repository.OnChangedListener() {
                 @Override
                 public void onChanged(EventType type) {
                     triggerListener(listener, type);

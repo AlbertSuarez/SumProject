@@ -7,23 +7,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import pereberge.sumproject.R;
 import pereberge.sumproject.domain.Reservation;
+import pereberge.sumproject.utils.DateUtils;
 
 public class TimetableAdapter extends ArrayAdapter<String> {
     private final Context context;
     private final String[] values;
-    private final List<Reservation> r;
+    private final List<Reservation> reservations;
 
-    public TimetableAdapter(Context context, String[] values, List<Reservation> r) {
+    public TimetableAdapter(Context context, String[] values, List<Reservation> reservations) {
         super(context, R.layout.horari_item_list, values);
         this.context = context;
         this.values = values;
-        this.r = r;
+        this.reservations = reservations;
     }
 
     @Override
@@ -32,26 +31,19 @@ public class TimetableAdapter extends ArrayAdapter<String> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View rowView = inflater.inflate(R.layout.horari_item_list, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.hora);
+        TextView textView = (TextView) rowView.findViewById(R.id.hour);
         textView.setText(values[position]);
-        TextView state = (TextView) rowView.findViewById(R.id.estat);
 
-        /*for(Reservation f:r){
-            TextView nom = (TextView) rowView.findViewById(R.id.nomReserva);
-            if(values[position].equals(f.getHora())){
-                nom.setText(f.getPersonaReserva());
+        Integer hour = DateUtils.timeZoneCodes.get(position).first;
+        Integer minute = DateUtils.timeZoneCodes.get(position).second;
+
+        for (Reservation reservation : reservations){
+            TextView nom = (TextView) rowView.findViewById(R.id.nameReservation);
+            if (DateUtils.isSameHour(reservation.getDate(), hour, minute)) {
+                nom.setText(reservation.getPerson());
             }
-            else{
-                nom.setText("Lliure");
-                nom.setTextColor(Integer.parseInt("4fa342", 16));
-            }
-        }*/
+        }
 
-
-        // Change icon based on name
-        String s = values[position];
-
-        System.out.println(s);
         return rowView;
     }
 

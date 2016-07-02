@@ -94,4 +94,7 @@
     <string name="title_activity">Padel Bellcaire</string>
     <string name="title_activity_reserva">ReservaActivity</string>
     <string name="title_activity_tkm">Padel Bellcaire</string>
+    <string name="hour_test">11:00-12:30</string>
+    <string name="name_test">Pere Bergé</string>
+    <string name="hint_name">Nom</string>
 </resources>
