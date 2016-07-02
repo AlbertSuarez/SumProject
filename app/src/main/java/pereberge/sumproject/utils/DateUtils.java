@@ -33,6 +33,17 @@ public class DateUtils {
                 calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR);
     }
 
+    public static Boolean isPassed(Date date){
+        Calendar calendar1 = Calendar.getInstance();
+        Calendar calendar2 = Calendar.getInstance();
+
+        calendar2.setTime(date);
+        if(calendar2.get(Calendar.HOUR_OF_DAY)>calendar1.get(Calendar.HOUR_OF_DAY)){
+            return true;
+        }
+        else return false;
+    }
+
     public static Boolean isSameHour(Date date, Integer hour, Integer minute) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);

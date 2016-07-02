@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.List;
@@ -18,12 +19,14 @@ public class TimetableAdapter extends ArrayAdapter<String> {
     private final Context context;
     private final String[] values;
     private final List<Reservation> reservations;
+    private final Boolean today;
 
-    public TimetableAdapter(Context context, String[] values, List<Reservation> reservations) {
+    public TimetableAdapter(Context context, String[] values, List<Reservation> reservations, Boolean today) {
         super(context, R.layout.horari_item_list, values);
         this.context = context;
         this.values = values;
         this.reservations = reservations;
+        this.today = today;
     }
 
     @Override
@@ -45,7 +48,16 @@ public class TimetableAdapter extends ArrayAdapter<String> {
                 rowView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Toast.makeText(context, "Pista Ocupada", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
+        if(today){
+            if(DateUtils.isPassed(DateUtils.createDateOfToday(hour, minute))){
+                rowView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                     }
                 });
             }

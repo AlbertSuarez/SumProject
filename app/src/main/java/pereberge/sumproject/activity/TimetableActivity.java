@@ -96,7 +96,7 @@ public class TimetableActivity extends ListActivity {
     }
 
     private void setAdapter() {
-        setListAdapter(new TimetableAdapter(this, timeZones, reservationsOfDaySelected));
+        setListAdapter(new TimetableAdapter(this, timeZones, reservationsOfDaySelected, todaySelected));
     }
 
 }
