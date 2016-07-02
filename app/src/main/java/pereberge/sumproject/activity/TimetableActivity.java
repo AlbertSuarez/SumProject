@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import pereberge.sumproject.R;
@@ -44,8 +43,8 @@ public class TimetableActivity extends ListActivity {
     }
 
     private void initialize() {
-        today = (Button) findViewById(R.id.avui);
-        tomorrow = (Button) findViewById(R.id.dema);
+        today = (Button) findViewById(R.id.today);
+        tomorrow = (Button) findViewById(R.id.tomorrow);
 
         tomorrow.setBackgroundColor(getResources().getColor(R.color.blueLight));
         tomorrow.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +56,7 @@ public class TimetableActivity extends ListActivity {
                 tomorrow.setTypeface(tomorrow.getTypeface(), Typeface.BOLD);
                 reservationsOfDaySelected = service.getReservationsByTomorrow();
                 setAdapter();
-                todaySelected = true;
+                todaySelected = false;
             }
         });
         today.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +68,7 @@ public class TimetableActivity extends ListActivity {
                 today.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 reservationsOfDaySelected = service.getReservationsByToday();
                 setAdapter();
-                todaySelected = false;
+                todaySelected = true;
             }
         });
         reservationsOfDaySelected = service.getReservationsByToday();
@@ -97,4 +96,5 @@ public class TimetableActivity extends ListActivity {
     private void setAdapter() {
         setListAdapter(new TimetableAdapter(this, timeZones, reservationsOfDaySelected));
     }
+
 }

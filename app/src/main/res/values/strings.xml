@@ -97,4 +97,8 @@
     <string name="hour_test">11:00-12:30</string>
     <string name="name_test">Pere Bergé</string>
     <string name="hint_name">Nom</string>
+    <string name="day_test">27/02/2016</string>
+    <string name="hour_reservation_test">11:00 - 12:30</string>
+    <string name="avui">Avui</string>
+    <string name="dema">Demà</string>
 </resources>

@@ -33,7 +33,7 @@ public class ReservationActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         TextView day = (TextView) findViewById(R.id.day);
-        TextView hour = (TextView) findViewById(R.id.hour);
+        TextView hour = (TextView) findViewById(R.id.timeZone);
         editTextName = (EditText) findViewById(R.id.newName);
         Button book = (Button) findViewById(R.id.botoReserva);
 
@@ -43,8 +43,8 @@ public class ReservationActivity extends AppCompatActivity {
 
         assert day != null;
         day.setText(DateUtils.dayToString(date));
-        //assert hour != null;
-        //hour.setText(DateUtils.hourToString(date));
+        assert hour != null;
+        hour.setText(DateUtils.hourToString(date));
 
         assert book != null;
         book.setOnClickListener(new View.OnClickListener() {

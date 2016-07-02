@@ -89,13 +89,33 @@ public class DateUtils {
     }
 
     public static String dayToString(Date date) {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         return df.format(date);
     }
 
     public static String hourToString(Date date) {
-        DateFormat df = new SimpleDateFormat("HH:mm");
-        return df.format(date) + " - " + df.format(nextTimeZone(date));
+        String ret = "";
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        Integer hour = calendar.get(Calendar.HOUR_OF_DAY);
+        Integer minute = calendar.get(Calendar.MINUTE);
+
+        if (hour < 10) ret += "0";
+        ret += hour.toString() + ":";
+        if (minute < 10) ret += "0";
+        ret += minute.toString();
+
+        ret += " - ";
+        calendar.add(Calendar.MINUTE, 90);
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
+        if (hour < 10) ret += "0";
+        ret += hour.toString() + ":";
+        if (minute < 10) ret += "0";
+        ret += minute.toString();
+
+        return ret;
     }
 
     public static Date nextTimeZone(Date date) {
