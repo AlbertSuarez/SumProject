@@ -22,15 +22,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/white"
-                android:text="Padel Bellcaire"
-                android:textSize="26dp"
-                android:gravity="center_vertical"/>
-            </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="Padel Bellcaire"
+                    android:textSize="26dp"
+                    android:layout_gravity="center_vertical"/>
 
+                <Space
+                    android:layout_width="270px"
+                    android:layout_height="20px" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:layout_gravity="center_vertical||right"
+                    android:id="@+id/about"
+                    android:src="@drawable/info"/>
+            </LinearLayout>
         </android.support.v7.widget.Toolbar>
 
         <android.support.v7.widget.Toolbar

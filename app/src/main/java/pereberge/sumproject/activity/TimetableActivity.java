@@ -9,6 +9,7 @@ import android.text.style.UnderlineSpan;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +76,14 @@ public class TimetableActivity extends ListActivity {
         });
         reservationsOfDaySelected = service.getReservationsByToday();
         setAdapter();
+
+        ImageButton info = (ImageButton) findViewById(R.id.about);
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Informació", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
