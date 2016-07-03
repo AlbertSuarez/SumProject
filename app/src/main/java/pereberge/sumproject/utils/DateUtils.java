@@ -38,6 +38,8 @@ public class DateUtils {
         Calendar calendar2 = Calendar.getInstance();
 
         calendar2.setTime(date);
+        System.out.println("Hora: " + calendar1.get(Calendar.HOUR_OF_DAY) + " Hora reserva: " + calendar2.get(Calendar.HOUR_OF_DAY));
+
         if(calendar2.get(Calendar.HOUR_OF_DAY)>calendar1.get(Calendar.HOUR_OF_DAY)){
             return true;
         }

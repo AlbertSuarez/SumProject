@@ -58,8 +58,8 @@ public class TimetableActivity extends ListActivity {
                 tomorrow.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 tomorrow.setTypeface(tomorrow.getTypeface(), Typeface.BOLD);
                 reservationsOfDaySelected = service.getReservationsByTomorrow();
-                setAdapter();
                 todaySelected = false;
+                setAdapter();
             }
         });
         today.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +70,8 @@ public class TimetableActivity extends ListActivity {
                 today.setTypeface(tomorrow.getTypeface(), Typeface.BOLD);
                 today.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 reservationsOfDaySelected = service.getReservationsByToday();
-                setAdapter();
                 todaySelected = true;
+                setAdapter();
             }
         });
         reservationsOfDaySelected = service.getReservationsByToday();
