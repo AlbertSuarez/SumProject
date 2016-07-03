@@ -58,6 +58,7 @@ public class TimetableAdapter extends ArrayAdapter<String> {
                 rowView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Toast.makeText(context, "Ja no es pot reservar", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

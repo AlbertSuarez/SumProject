@@ -41,9 +41,9 @@ public class DateUtils {
         System.out.println("Hora: " + calendar1.get(Calendar.HOUR_OF_DAY) + " Hora reserva: " + calendar2.get(Calendar.HOUR_OF_DAY));
 
         if(calendar2.get(Calendar.HOUR_OF_DAY)>calendar1.get(Calendar.HOUR_OF_DAY)){
-            return true;
+            return false;
         }
-        else return false;
+        else return true;
     }
 
     public static Boolean isSameHour(Date date, Integer hour, Integer minute) {
