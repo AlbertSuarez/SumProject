@@ -32,6 +32,6 @@ public class SearchAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        text.setText(items.get(cursor.getPosition()));
+        text.setText(items.get(cursor.getInt(0)));
     }
 }
