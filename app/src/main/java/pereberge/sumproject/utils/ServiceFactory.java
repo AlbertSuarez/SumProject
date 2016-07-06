@@ -2,6 +2,7 @@ package pereberge.sumproject.utils;
 
 import android.content.Context;
 
+import pereberge.sumproject.repository.PartnerRepository;
 import pereberge.sumproject.repository.ReservationRepository;
 import pereberge.sumproject.services.ReservationService;
 
@@ -11,7 +12,9 @@ public class ServiceFactory {
 
     public static ReservationService getReservationService(Context context) {
         if (reservationService == null)
-            reservationService = new ReservationService(new ReservationRepository(context));
+            reservationService = new ReservationService(
+                    new ReservationRepository(context),
+                    new PartnerRepository(context));
         return reservationService;
     }
 }

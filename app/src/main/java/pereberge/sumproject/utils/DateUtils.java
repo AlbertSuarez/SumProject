@@ -36,14 +36,8 @@ public class DateUtils {
     public static Boolean isPassed(Date date){
         Calendar calendar1 = Calendar.getInstance();
         Calendar calendar2 = Calendar.getInstance();
-
         calendar2.setTime(date);
-        System.out.println("Hora: " + calendar1.get(Calendar.HOUR_OF_DAY) + " Hora reserva: " + calendar2.get(Calendar.HOUR_OF_DAY));
-
-        if(calendar2.get(Calendar.HOUR_OF_DAY)>calendar1.get(Calendar.HOUR_OF_DAY)){
-            return false;
-        }
-        else return true;
+        return calendar2.get(Calendar.HOUR_OF_DAY) <= calendar1.get(Calendar.HOUR_OF_DAY);
     }
 
     public static Boolean isSameHour(Date date, Integer hour, Integer minute) {

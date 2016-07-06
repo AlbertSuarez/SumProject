@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import pereberge.sumproject.domain.Partner;
 import pereberge.sumproject.repository.Repository;
 import pereberge.sumproject.domain.Reservation;
 import pereberge.sumproject.utils.DateUtils;
@@ -14,9 +15,11 @@ public class ReservationService extends Service<Reservation> {
     private int loaded = 0;
     private int loadNeed = 1;
 
-    public ReservationService(Repository<Reservation> repository) {
+    private Repository<Partner> partnerRepository;
+
+    public ReservationService(Repository<Reservation> repository, Repository<Partner> partnerRepository) {
         super(repository);
-        this.repository = repository;
+        this.partnerRepository = partnerRepository;
     }
 
     public List<Reservation> getReservations() {
@@ -69,6 +72,14 @@ public class ReservationService extends Service<Reservation> {
         return repository.get(id);
     }
 
+    public List<String> getPartnerNames() {
+        List<String> names = new ArrayList<>();
+        for (Partner partner : partnerRepository.all()) {
+            names.add(partner.getName());
+        }
+        return names;
+    }
+
     @Override
     public void setOnChangedListener(final Repository.OnChangedListener listener) {
 
@@ -81,6 +92,15 @@ public class ReservationService extends Service<Reservation> {
         if (repository != null) {
             loadNeed+=1;
             repository.setOnChangedListener(new Repository.OnChangedListener() {
+                @Override
+                public void onChanged(EventType type) {
+                    triggerListener(listener, type);
+                }
+            });
+        }
+        if (partnerRepository != null) {
+            loadNeed += 1;
+            partnerRepository.setOnChangedListener(new Repository.OnChangedListener() {
                 @Override
                 public void onChanged(EventType type) {
                     triggerListener(listener, type);

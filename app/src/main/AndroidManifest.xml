@@ -9,11 +9,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
-            android:label="@string/title_activity_main_acitivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
             android:name=".activity.TimetableActivity"
             android:label="@string/title_activity_tkm"
             android:theme="@style/AppTheme.NoActionBar">
