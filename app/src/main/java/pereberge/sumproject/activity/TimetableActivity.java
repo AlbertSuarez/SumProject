@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
@@ -49,6 +50,14 @@ public class TimetableActivity extends ListActivity {
         today = (Button) findViewById(R.id.today);
         tomorrow = (Button) findViewById(R.id.tomorrow);
 
+        ImageButton info = (ImageButton) findViewById(R.id.about);
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Informació", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         tomorrow.setBackgroundColor(getResources().getColor(R.color.blueLight));
         tomorrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,14 +85,6 @@ public class TimetableActivity extends ListActivity {
         });
         reservationsOfDaySelected = service.getReservationsByToday();
         setAdapter();
-
-        ImageButton info = (ImageButton) findViewById(R.id.about);
-        info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Informació", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override

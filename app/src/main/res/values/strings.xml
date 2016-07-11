@@ -101,4 +101,6 @@
     <string name="hour_reservation_test">11:00 - 12:30</string>
     <string name="avui">Avui</string>
     <string name="dema">Demà</string>
+    <string name="app_title_image">App Title Image</string>
+    <string name="app_logo">App Logo Image</string>
 </resources>
