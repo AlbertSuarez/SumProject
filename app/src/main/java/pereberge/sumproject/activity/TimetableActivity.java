@@ -46,6 +46,13 @@ public class TimetableActivity extends ListActivity {
         initialize();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (todaySelected) reservationsOfDaySelected = service.getReservationsByToday();
+        else reservationsOfDaySelected = service.getReservationsByTomorrow();
+        setAdapter();
+    }
+
     private void initialize() {
         today = (Button) findViewById(R.id.today);
         tomorrow = (Button) findViewById(R.id.tomorrow);
@@ -102,7 +109,7 @@ public class TimetableActivity extends ListActivity {
 
         Intent intent = new Intent(TimetableActivity.this, ReservationActivity.class);
         intent.putExtra(ReservationActivity.INTENT_RESERVATION, date.getTime());
-        startActivity(intent);
+        startActivityForResult(intent, 0);
     }
 
     private void setAdapter() {
