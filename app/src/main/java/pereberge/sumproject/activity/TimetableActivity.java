@@ -65,13 +65,13 @@ public class TimetableActivity extends ListActivity {
             }
         });
 
-        tomorrow.setBackgroundColor(getResources().getColor(R.color.blueLight));
+        tomorrow.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         tomorrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                today.setBackgroundColor(getResources().getColor(R.color.blueLight));
+                today.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 today.setTypeface(today.getTypeface(), Typeface.NORMAL);
-                tomorrow.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                tomorrow.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 tomorrow.setTypeface(tomorrow.getTypeface(), Typeface.BOLD);
                 reservationsOfDaySelected = service.getReservationsByTomorrow();
                 todaySelected = false;
@@ -81,10 +81,10 @@ public class TimetableActivity extends ListActivity {
         today.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tomorrow.setBackgroundColor(getResources().getColor(R.color.blueLight));
+                tomorrow.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 tomorrow.setTypeface(today.getTypeface(), Typeface.NORMAL);
                 today.setTypeface(tomorrow.getTypeface(), Typeface.BOLD);
-                today.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                today.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 reservationsOfDaySelected = service.getReservationsByToday();
                 todaySelected = true;
                 setAdapter();

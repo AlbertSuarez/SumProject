@@ -103,4 +103,6 @@
     <string name="dema">Demà</string>
     <string name="app_title_image">App Title Image</string>
     <string name="app_logo">App Logo Image</string>
+    <string name="padel">Padel Bellcaire</string>
+    <string name="about_app">About app</string>
 </resources>

@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:text="Reserva"
         android:id="@+id/botoReserva"
-        android:textColor="@color/white"
+        android:textColor="@color/lightPrimaryColor"
         android:background="@color/colorPrimary"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
