@@ -3,6 +3,8 @@ package pereberge.sumproject.activity;
 import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -30,7 +33,7 @@ import pereberge.sumproject.utils.ServiceFactory;
 public class ReservationActivity extends AppCompatActivity {
 
     public static final String INTENT_RESERVATION = "DATE";
-
+    public static SearchView search;
     private String name;
     private ReservationService reservationService;
 
@@ -49,7 +52,7 @@ public class ReservationActivity extends AppCompatActivity {
         this.items = reservationService.getPartnerNames();
 
         SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        final SearchView search = (SearchView) findViewById(R.id.newName);
+        search = (SearchView) findViewById(R.id.newName);
         assert search != null;
         search.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -62,6 +65,21 @@ public class ReservationActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String query) {
                 loadHistory(query);
                 return true;
+            }
+        });
+        search.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
+            @Override
+            public boolean onSuggestionSelect(int position) {
+                return false;
+            }
+
+            @Override
+            public boolean onSuggestionClick(int position) {
+                Cursor cursor = search.getSuggestionsAdapter().getCursor();
+                cursor.moveToPosition(position);
+                String val = cursor.getString(cursor.getColumnIndex("text"));
+                search.setQuery(val, true);
+                return false;
             }
         });
 
@@ -81,7 +99,9 @@ public class ReservationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 name = search.getQuery().toString();
-                if (!name.isEmpty()) {
+                if (name.isEmpty() || !items.contains(name))
+                    Toast.makeText(ReservationActivity.this, "Nom de soci buit o incorrecte", Toast.LENGTH_SHORT).show();
+                else {
                     Reservation reservation = new Reservation(name, date);
                     reservationService.save(reservation);
                     Toast.makeText(ReservationActivity.this, "Reserva realitzada", Toast.LENGTH_SHORT).show();
@@ -89,6 +109,7 @@ public class ReservationActivity extends AppCompatActivity {
                 }
             }
         });
+        search.onActionViewExpanded();
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -106,16 +127,13 @@ public class ReservationActivity extends AppCompatActivity {
                     cursor.addRow(temp);
                 }
             }
-            final SearchView search = (SearchView) findViewById(R.id.newName);
-            assert search != null;
             search.setSuggestionsAdapter(new SearchAdapter(this, cursor, items));
         }
     }
 
-    public static String cleanString(String text) {
-        text = Normalizer.normalize(text, Normalizer.Form.NFD);
-        text = text.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
-        return text;
+    public static String cleanString(final String text) {
+        String newText = Normalizer.normalize(text, Normalizer.Form.NFD);
+        return newText.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
     }
 
 }
