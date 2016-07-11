@@ -5,6 +5,7 @@
     android:id="@+id/item">
 
     <LinearLayout
+        android:id="@+id/timetable_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -20,6 +21,7 @@
             android:textStyle="bold"
             android:text="@string/hour_test"
             android:textSize="20sp"
+            android:textColor="@color/primaryText"
             android:gravity="center"/>
 
         <Space
@@ -29,6 +31,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:textColor="@color/secondaryText"
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="18sp"

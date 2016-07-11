@@ -45,6 +45,7 @@
                     android:src="@drawable/info"
                     android:contentDescription="@string/about_app" />
             </RelativeLayout>
+
         </android.support.v7.widget.Toolbar>
 
         <android.support.v7.widget.Toolbar
@@ -52,13 +53,15 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:layout_marginRight="18dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:weightSum="1">
+                android:weightSum="1"
+                android:background="@color/colorPrimaryDark">
 
                 <Button
                     android:layout_width="0dp"

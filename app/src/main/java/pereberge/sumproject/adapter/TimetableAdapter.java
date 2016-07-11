@@ -1,10 +1,12 @@
 package pereberge.sumproject.adapter;
 
 import android.content.Context;
+import android.util.AndroidRuntimeException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +14,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import pereberge.sumproject.R;
+import pereberge.sumproject.activity.TimetableActivity;
 import pereberge.sumproject.domain.Reservation;
 import pereberge.sumproject.utils.DateUtils;
 
@@ -41,10 +44,13 @@ public class TimetableAdapter extends ArrayAdapter<String> {
         Integer hour = DateUtils.timeZoneCodes.get(position).first;
         Integer minute = DateUtils.timeZoneCodes.get(position).second;
 
+        LinearLayout layout = (LinearLayout) rowView.findViewById(R.id.timetable_layout);
+        TextView nom = (TextView) rowView.findViewById(R.id.nameReservation);
+
         for (Reservation reservation : reservations){
-            TextView nom = (TextView) rowView.findViewById(R.id.nameReservation);
             if (DateUtils.isSameHour(reservation.getDate(), hour, minute)) {
                 nom.setText(reservation.getPerson());
+                layout.setBackgroundColor(context.getResources().getColor(R.color.dividerColor));
                 rowView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -55,6 +61,7 @@ public class TimetableAdapter extends ArrayAdapter<String> {
         }
         if(today){
             if(DateUtils.isPassed(DateUtils.createDateOfToday(hour, minute))){
+                layout.setBackgroundColor(context.getResources().getColor(R.color.dividerColor));
                 rowView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -65,6 +72,5 @@ public class TimetableAdapter extends ArrayAdapter<String> {
         }
         return rowView;
     }
-
 
 }
