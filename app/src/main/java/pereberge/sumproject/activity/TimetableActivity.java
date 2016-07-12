@@ -105,8 +105,8 @@ public class TimetableActivity extends ListActivity {
         final EditText password = (EditText) inflater.inflate(getResources().getLayout(R.layout.password), null);
         if (!name.getText().toString().isEmpty()) {
             new AlertDialog.Builder(TimetableActivity.this)
-                .setTitle("Delete All Data")
-                .setMessage("Are you sure you want to delete the selected database?")
+                .setTitle("Cancel·lar reserva")
+                .setMessage("Introdueix el codi de seguretat facilitat al fer la reserva:")
                 .setView(password)
                 .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

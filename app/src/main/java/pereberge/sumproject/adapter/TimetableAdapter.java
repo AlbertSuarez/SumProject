@@ -47,19 +47,23 @@ public class TimetableAdapter extends ArrayAdapter<String> {
         LinearLayout layout = (LinearLayout) rowView.findViewById(R.id.timetable_layout);
         TextView nom = (TextView) rowView.findViewById(R.id.nameReservation);
 
+        String toast = "Ja no es pot reservar";
+
         for (Reservation reservation : reservations){
             if (DateUtils.isSameHour(reservation.getDate(), hour, minute)) {
                 nom.setText(reservation.getPerson());
                 layout.setBackgroundColor(context.getResources().getColor(R.color.dividerColor));
+                toast = "Ja no es pot cancel·lar";
             }
         }
         if(today){
             if(DateUtils.isPassed(DateUtils.createDateOfToday(hour, minute))){
                 layout.setBackgroundColor(context.getResources().getColor(R.color.dividerColor));
+                final String finalToast = toast;
                 rowView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(context, "Ja no es pot reservar", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, finalToast, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
