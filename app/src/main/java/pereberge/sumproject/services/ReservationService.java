@@ -1,5 +1,7 @@
 package pereberge.sumproject.services;
 
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +10,7 @@ import pereberge.sumproject.domain.Partner;
 import pereberge.sumproject.repository.Repository;
 import pereberge.sumproject.domain.Reservation;
 import pereberge.sumproject.utils.DateUtils;
+import pereberge.sumproject.utils.SecurityUtils;
 import pereberge.sumproject.utils.Service;
 
 public class ReservationService extends Service<Reservation> {
@@ -75,6 +78,21 @@ public class ReservationService extends Service<Reservation> {
     public boolean existsReservationSameDay(String name, Date date) {
         for (Reservation reservation : getReservationsByDay(DateUtils.getDay(date), DateUtils.getMonth(date), DateUtils.getYear(date))) {
             if (reservation.getPerson().equals(name)) return true;
+        }
+        return false;
+    }
+
+    public boolean deleteSpecificReservation(String name, Boolean todaySelected, String password) {
+        List<Reservation> reservations;
+        if (todaySelected) reservations = getReservationsByToday();
+        else reservations = getReservationsByTomorrow();
+        for (Reservation reservation : reservations) {
+            if (reservation.getPerson().equals(name)) {
+                if (!reservation.getPassword().equals(SecurityUtils.convertPassMd5(password)))
+                    return false;
+                delete(reservation.getId());
+                return true;
+            }
         }
         return false;
     }

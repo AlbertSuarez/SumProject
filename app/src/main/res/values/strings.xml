@@ -111,4 +111,6 @@
     <string name="enter_password_text">Introdueix el codi de seguretat</string>
     <string name="password_1_text">Contrasenya</string>
     <string name="password_2_text">Repeteix la contrasenya</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel·lar</string>
 </resources>
