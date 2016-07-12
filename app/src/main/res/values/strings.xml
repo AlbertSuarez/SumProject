@@ -105,4 +105,10 @@
     <string name="app_logo">App Logo Image</string>
     <string name="padel">Padel Bellcaire</string>
     <string name="about_app">About app</string>
+    <string name="reservation_test">Reserva</string>
+    <string name="day_and_hour_text">Dia i hora</string>
+    <string name="enter_name_text">Introdueix el nom de soci</string>
+    <string name="enter_password_text">Introdueix el codi de seguretat</string>
+    <string name="password_1_text">Contrasenya</string>
+    <string name="password_2_text">Repeteix la contrasenya</string>
 </resources>

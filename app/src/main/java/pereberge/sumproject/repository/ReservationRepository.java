@@ -25,6 +25,8 @@ public class ReservationRepository extends FirebaseRepository<Reservation>{
                 reservation.setPerson(d.getValue(String.class));
             } else if (d.getKey().equals("date")) {
                 reservation.setDate(d.getValue(Date.class));
+            } else if (d.getKey().equals("password")) {
+                reservation.setPassword(d.getValue(String.class));
             }
         }
         return reservation;

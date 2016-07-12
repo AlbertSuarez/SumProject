@@ -9,14 +9,16 @@ public class Reservation implements Entity {
     private String id;
     private String person;
     private Date date;
+    private String password;
 
     public Reservation() {
 
     }
 
-    public Reservation(String person, Date date){
+    public Reservation(String person, Date date, String password){
         this.date = date;
         this.person = person;
+        this.password = password;
     }
 
     public String getPerson() {
@@ -43,5 +45,13 @@ public class Reservation implements Entity {
     @Override
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

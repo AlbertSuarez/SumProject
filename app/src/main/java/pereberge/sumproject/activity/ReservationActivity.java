@@ -3,7 +3,6 @@ package pereberge.sumproject.activity;
 import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Build;
@@ -11,11 +10,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -30,6 +29,7 @@ import pereberge.sumproject.adapter.SearchAdapter;
 import pereberge.sumproject.domain.Reservation;
 import pereberge.sumproject.services.ReservationService;
 import pereberge.sumproject.utils.DateUtils;
+import pereberge.sumproject.utils.SecurityUtils;
 import pereberge.sumproject.utils.ServiceFactory;
 
 @SuppressWarnings("all")
@@ -93,7 +93,12 @@ public class ReservationActivity extends AppCompatActivity {
 
         TextView day = (TextView) findViewById(R.id.day);
         TextView hour = (TextView) findViewById(R.id.timeZone);
-        Button book = (Button) findViewById(R.id.botoReserva);
+        Button book = (Button) findViewById(R.id.reservation_button);
+
+        final EditText firstPassword = (EditText) findViewById(R.id.password_1);
+        final EditText secondPassword = (EditText) findViewById(R.id.password_2);
+        assert firstPassword != null;
+        assert secondPassword != null;
 
         final Date date = DateUtils.millisToDate(getIntent().getLongExtra(INTENT_RESERVATION, 0));
 
@@ -107,12 +112,18 @@ public class ReservationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 name = search.getQuery().toString();
+                String firstPsw = SecurityUtils.convertPassMd5(firstPassword.getText().toString());
+                String secondPsw = SecurityUtils.convertPassMd5(secondPassword.getText().toString());
                 if (name.isEmpty() || !items.contains(name))
                     Toast.makeText(ReservationActivity.this, "Nom de soci buit o incorrecte", Toast.LENGTH_SHORT).show();
                 else if (reservationService.existsReservationSameDay(name, date))
                     Toast.makeText(ReservationActivity.this, "El soci ja ha reservat pista el mateix dia", Toast.LENGTH_SHORT).show();
+                else if (firstPassword.getText().toString().isEmpty() || secondPassword.getText().toString().isEmpty())
+                    Toast.makeText(ReservationActivity.this, "El camp de contrasenya és buit", Toast.LENGTH_SHORT).show();
+                else if (!firstPsw.equals(secondPsw))
+                    Toast.makeText(ReservationActivity.this, "Les contrasenyes no coincideixen", Toast.LENGTH_SHORT).show();
                 else {
-                    Reservation reservation = new Reservation(name, date);
+                    Reservation reservation = new Reservation(name, date, firstPsw);
                     reservationService.save(reservation);
                     Toast.makeText(ReservationActivity.this, "Reserva realitzada", Toast.LENGTH_SHORT).show();
                     finish();
