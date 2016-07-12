@@ -25,6 +25,7 @@
         <activity
             android:name=".activity.ReservationActivity"
             android:label="@string/title_activity_reserva"
+            android:parentActivityName=".activity.TimetableActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

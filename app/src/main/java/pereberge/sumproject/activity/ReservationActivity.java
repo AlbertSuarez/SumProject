@@ -32,6 +32,7 @@ import pereberge.sumproject.services.ReservationService;
 import pereberge.sumproject.utils.DateUtils;
 import pereberge.sumproject.utils.ServiceFactory;
 
+@SuppressWarnings("all")
 public class ReservationActivity extends AppCompatActivity {
 
     public static final String INTENT_RESERVATION = "DATE";
@@ -45,10 +46,14 @@ public class ReservationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         assert toolbar != null;
         toolbar.setTitle("Reserva");
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         reservationService = ServiceFactory.getReservationService(getApplicationContext());
         this.items = reservationService.getPartnerNames();
