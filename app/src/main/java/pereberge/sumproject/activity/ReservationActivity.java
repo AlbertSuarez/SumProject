@@ -36,6 +36,7 @@ import pereberge.sumproject.utils.ServiceFactory;
 public class ReservationActivity extends AppCompatActivity {
 
     public static final String INTENT_RESERVATION = "DATE";
+    public static final String EMPTY_SEARCH = "No hi ha resultats.";
     public static SearchView search;
     private String name;
     private ReservationService reservationService;
@@ -85,7 +86,7 @@ public class ReservationActivity extends AppCompatActivity {
                 Cursor cursor = search.getSuggestionsAdapter().getCursor();
                 cursor.moveToPosition(position);
                 String val = cursor.getString(cursor.getColumnIndex("text"));
-                search.setQuery(val, true);
+                if (val != EMPTY_SEARCH) search.setQuery(val, true);
                 return false;
             }
         });
@@ -108,6 +109,8 @@ public class ReservationActivity extends AppCompatActivity {
                 name = search.getQuery().toString();
                 if (name.isEmpty() || !items.contains(name))
                     Toast.makeText(ReservationActivity.this, "Nom de soci buit o incorrecte", Toast.LENGTH_SHORT).show();
+                else if (reservationService.existsReservationSameDay(name, date))
+                    Toast.makeText(ReservationActivity.this, "El soci ja ha reservat pista el mateix dia", Toast.LENGTH_SHORT).show();
                 else {
                     Reservation reservation = new Reservation(name, date);
                     reservationService.save(reservation);
@@ -149,6 +152,11 @@ public class ReservationActivity extends AppCompatActivity {
                     temp[1] = items.get(i);
                     cursor.addRow(temp);
                 }
+            }
+            if (cursor.getCount() == 0) {
+                temp[0] = items.size();
+                temp[1] = EMPTY_SEARCH;
+                cursor.addRow(temp);
             }
             search.setSuggestionsAdapter(new SearchAdapter(this, cursor, items));
         }

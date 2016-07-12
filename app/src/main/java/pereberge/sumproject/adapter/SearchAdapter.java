@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import pereberge.sumproject.R;
+import pereberge.sumproject.activity.ReservationActivity;
 
 public class SearchAdapter extends CursorAdapter {
 
@@ -32,6 +33,8 @@ public class SearchAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        text.setText(items.get(cursor.getInt(0)));
+        int index = cursor.getInt(0);
+        if (index >= 0 && index < items.size()) text.setText(items.get(index));
+        else text.setText(ReservationActivity.EMPTY_SEARCH);
     }
 }

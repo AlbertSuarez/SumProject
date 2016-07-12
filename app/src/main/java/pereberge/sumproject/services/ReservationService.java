@@ -72,6 +72,13 @@ public class ReservationService extends Service<Reservation> {
         return repository.get(id);
     }
 
+    public boolean existsReservationSameDay(String name, Date date) {
+        for (Reservation reservation : getReservationsByDay(DateUtils.getDay(date), DateUtils.getMonth(date), DateUtils.getYear(date))) {
+            if (reservation.getPerson().equals(name)) return true;
+        }
+        return false;
+    }
+
     public List<String> getPartnerNames() {
         List<String> names = new ArrayList<>();
         for (Partner partner : partnerRepository.all()) {
