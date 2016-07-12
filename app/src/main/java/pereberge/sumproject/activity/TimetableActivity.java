@@ -1,6 +1,8 @@
 package pereberge.sumproject.activity;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -8,13 +10,16 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 
@@ -37,20 +42,20 @@ public class TimetableActivity extends ListActivity {
 
     private ReservationService service;
     private List<Reservation> reservationsOfDaySelected;
+    private LayoutInflater inflater;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
+        inflater = LayoutInflater.from(getApplicationContext());
         service = ServiceFactory.getReservationService(getApplicationContext());
         initialize();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (todaySelected) reservationsOfDaySelected = service.getReservationsByToday();
-        else reservationsOfDaySelected = service.getReservationsByTomorrow();
-        setAdapter();
+        updateView();
     }
 
     private void initialize() {
@@ -96,20 +101,47 @@ public class TimetableActivity extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        TextView name = (TextView) v.findViewById(R.id.nameReservation);
+        final TextView name = (TextView) v.findViewById(R.id.nameReservation);
+        final EditText password = (EditText) inflater.inflate(getResources().getLayout(R.layout.password), null);
         if (!name.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Pista Ocupada", Toast.LENGTH_SHORT).show();
-            return;
+            new AlertDialog.Builder(TimetableActivity.this)
+                .setTitle("Delete All Data")
+                .setMessage("Are you sure you want to delete the selected database?")
+                .setView(password)
+                .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (service.deleteSpecificReservation(name.getText().toString(), todaySelected, password.getText().toString())) {
+                            updateView();
+                            Toast.makeText(TimetableActivity.this, "Reserva cancel·lada", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Toast.makeText(TimetableActivity.this, "Contrasenya incorrecta", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
+                .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .show();
         }
+        else {
+            Pair<Integer, Integer> pair = DateUtils.timeZoneCodes.get(position);
+            Date date;
+            if (todaySelected) date = DateUtils.createDateOfToday(pair.first, pair.second);
+            else date = DateUtils.createDateOfTomorrow(pair.first, pair.second);
 
-        Pair<Integer, Integer> pair = DateUtils.timeZoneCodes.get(position);
-        Date date;
-        if (todaySelected) date = DateUtils.createDateOfToday(pair.first, pair.second);
-        else date = DateUtils.createDateOfTomorrow(pair.first, pair.second);
+            Intent intent = new Intent(TimetableActivity.this, ReservationActivity.class);
+            intent.putExtra(ReservationActivity.INTENT_RESERVATION, date.getTime());
+            startActivityForResult(intent, 0);
+        }
+    }
 
-        Intent intent = new Intent(TimetableActivity.this, ReservationActivity.class);
-        intent.putExtra(ReservationActivity.INTENT_RESERVATION, date.getTime());
-        startActivityForResult(intent, 0);
+    private void updateView() {
+        if (todaySelected) reservationsOfDaySelected = service.getReservationsByToday();
+        else reservationsOfDaySelected = service.getReservationsByTomorrow();
+        setAdapter();
     }
 
     private void setAdapter() {

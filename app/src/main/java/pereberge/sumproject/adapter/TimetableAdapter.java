@@ -51,12 +51,6 @@ public class TimetableAdapter extends ArrayAdapter<String> {
             if (DateUtils.isSameHour(reservation.getDate(), hour, minute)) {
                 nom.setText(reservation.getPerson());
                 layout.setBackgroundColor(context.getResources().getColor(R.color.dividerColor));
-                rowView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context, "Pista Ocupada", Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
         }
         if(today){
