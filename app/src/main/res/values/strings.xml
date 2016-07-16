@@ -113,4 +113,25 @@
     <string name="password_2_text">Repeteix la contrasenya</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel·lar</string>
+    <string name="wrong_password">Contrasenya incorrecta</string>
+    <string name="reservation_cancelation">Reserva cancel·lada</string>
+    <string name="reservation_cancelation_verb">Cancel·lar reserva</string>
+    <string name="dialog_text">Introdueix el codi de seguretat facilitat al fer la reserva:</string>
+    <string name="reservation_completed">Reserva completada!</string>
+    <string name="undo">Desfer</string>
+    <string name="reservation">Reserva</string>
+    <string name="wrong_partner">Nom de soci buit o incorrecte</string>
+    <string name="busy_timetable">El soci ja ha reservat pista el mateix dia</string>
+    <string name="empty_password">El camp de contrasenya és buit</string>
+    <string name="different_password">Les contrasenyes no coincideixen</string>
+    <string name="undo_reservation_done">Reserva anul·lada</string>
+    <string name="no_play_last_reservation">No pots reservar pista fins que no hagi caducat la teva última reserva</string>
+    <string name="pere_link">https://github.com/pberge</string>
+    <string name="albert_link">https://es.linkedin.com/in/albertsuarezmolgo</string>
+    <string name="elena_link">https://es.linkedin.com/in/elenaruizsw</string>
+    <string name="copyright">Copyright © 2016 All Rights Reserved.</string>
+    <string name="about">Aplicació creada per a un equip de tres estudiants de la Facultat d\'Informatica de Barcelona.</string>
+    <string name="pere">Pere Berge</string>
+    <string name="albert">Albert Suarez</string>
+    <string name="elena">Elena Ruiz</string>
 </resources>

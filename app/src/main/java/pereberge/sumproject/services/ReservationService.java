@@ -3,6 +3,7 @@ package pereberge.sumproject.services;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -95,6 +96,14 @@ public class ReservationService extends Service<Reservation> {
             }
         }
         return false;
+    }
+
+    public boolean canPlay(String name) {
+        for (Reservation reservation : getReservationsByTodayAndTomorrow())
+            if (reservation.getPerson().equals(name) &&
+                    Calendar.getInstance().getTime().getTime() < reservation.getDate().getTime())
+                return false;
+        return true;
     }
 
     public List<String> getPartnerNames() {

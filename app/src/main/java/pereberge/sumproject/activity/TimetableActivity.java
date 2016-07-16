@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -36,6 +37,7 @@ public class TimetableActivity extends ListActivity {
     private Button tomorrow;
     private Boolean todaySelected = true;
 
+    public static final String INTENT_RETURN = "IntentReturn";
     private static final String[] timeZones =
             new String[]{"11:00-12:30", "12:30-14:00", "14:00-15:30", "15:30-17:00",
                     "17:00-18:30", "18:30-20:00", "20:00-21:30", "21:30-23:00"};
@@ -55,7 +57,19 @@ public class TimetableActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) return;
         updateView();
+        final String reservationId = data.getStringExtra(INTENT_RETURN);
+        Snackbar.make(findViewById(R.id.timetable_activity_layout), R.string.reservation_completed, Snackbar.LENGTH_LONG)
+                .setAction(R.string.undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        service.delete(reservationId);
+                        updateView();
+                        Snackbar.make(findViewById(R.id.timetable_activity_layout), R.string.undo_reservation_done, Snackbar.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
 
     private void initialize() {
@@ -66,7 +80,8 @@ public class TimetableActivity extends ListActivity {
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Informació", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(TimetableActivity.this, AboutActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -105,17 +120,17 @@ public class TimetableActivity extends ListActivity {
         final EditText password = (EditText) inflater.inflate(getResources().getLayout(R.layout.password), null);
         if (!name.getText().toString().isEmpty()) {
             new AlertDialog.Builder(TimetableActivity.this)
-                .setTitle("Cancel·lar reserva")
-                .setMessage("Introdueix el codi de seguretat facilitat al fer la reserva:")
+                .setTitle(R.string.reservation_cancelation_verb)
+                .setMessage(R.string.dialog_text)
                 .setView(password)
                 .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if (service.deleteSpecificReservation(name.getText().toString(), todaySelected, password.getText().toString())) {
                             updateView();
-                            Toast.makeText(TimetableActivity.this, "Reserva cancel·lada", Toast.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(R.id.timetable_activity_layout), R.string.reservation_cancelation, Snackbar.LENGTH_SHORT).show();
                         }
                         else {
-                            Toast.makeText(TimetableActivity.this, "Contrasenya incorrecta", Toast.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(R.id.timetable_activity_layout), R.string.wrong_password, Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 })

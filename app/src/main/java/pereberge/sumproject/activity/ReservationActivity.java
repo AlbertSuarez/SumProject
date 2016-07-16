@@ -3,14 +3,14 @@ package pereberge.sumproject.activity;
 import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,12 +18,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.text.Normalizer;
 import java.util.Date;
 import java.util.List;
-
 import pereberge.sumproject.R;
 import pereberge.sumproject.adapter.SearchAdapter;
 import pereberge.sumproject.domain.Reservation;
@@ -50,7 +47,7 @@ public class ReservationActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         assert toolbar != null;
-        toolbar.setTitle("Reserva");
+        toolbar.setTitle(R.string.reservation);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -115,17 +112,21 @@ public class ReservationActivity extends AppCompatActivity {
                 String firstPsw = SecurityUtils.convertPassMd5(firstPassword.getText().toString());
                 String secondPsw = SecurityUtils.convertPassMd5(secondPassword.getText().toString());
                 if (name.isEmpty() || !items.contains(name))
-                    Toast.makeText(ReservationActivity.this, "Nom de soci buit o incorrecte", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(R.id.reservation_layout), R.string.wrong_partner, Snackbar.LENGTH_SHORT).show();
                 else if (reservationService.existsReservationSameDay(name, date))
-                    Toast.makeText(ReservationActivity.this, "El soci ja ha reservat pista el mateix dia", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(R.id.reservation_layout), R.string.busy_timetable, Snackbar.LENGTH_SHORT).show();
+                else if (!reservationService.canPlay(name))
+                    Snackbar.make(findViewById(R.id.reservation_layout), R.string.no_play_last_reservation, Snackbar.LENGTH_SHORT).show();
                 else if (firstPassword.getText().toString().isEmpty() || secondPassword.getText().toString().isEmpty())
-                    Toast.makeText(ReservationActivity.this, "El camp de contrasenya és buit", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(R.id.reservation_layout), R.string.empty_password, Snackbar.LENGTH_SHORT).show();
                 else if (!firstPsw.equals(secondPsw))
-                    Toast.makeText(ReservationActivity.this, "Les contrasenyes no coincideixen", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(R.id.reservation_layout), R.string.different_password, Snackbar.LENGTH_SHORT).show();
                 else {
                     Reservation reservation = new Reservation(name, date, firstPsw);
                     reservationService.save(reservation);
-                    Toast.makeText(ReservationActivity.this, "Reserva realitzada", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ReservationActivity.this, TimetableActivity.class);
+                    intent.putExtra(TimetableActivity.INTENT_RETURN, reservation.getId());
+                    setResult(RESULT_OK, intent);
                     finish();
                 }
             }
